@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+        <label>Categories </label>
+        <select class="form-control form-control-lg" id="idCat" name="idCat" [(ngModel)]="IdDepart"
+            (change)="onChange()">
+            @for(depart of departements;track depart.idDepart)
+            {
+            <option value="{{depart.idDepart}}"> {{depart.nomDepart}} </option>
+            }
+        </select>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h1 align="center" style="margin-bottom: 20px;">List des projets</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id Projet</th>
+                        <th>Nom Projet</th>
+                        <th>Nom Client</th>
+                        <th>Date de debut</th>
+                        <th>Departement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (projet of projets; track projet.idProjet) {
+                    <tr>
+                        <td>{{projet.idProjet}}</td>
+                        <td>{{projet.nomProjet}}</td>
+                        <td>{{projet.nomClient}}</td>
+                        <td>{{projet.dateDeb | date:'dd/MM/yyyy'}}</td>
+                        <td>{{projet.departement.nomDepart}}</td>
+                        @if(auth.isAdmin()) {
+                        <td><a class="btn btn-danger" (click)="supprimerProjet(projet)">Supprimer</a></td>
+                        <td><a class="btn btn-success" [routerLink]="['/UpdateProjet',projet.idProjet]">Modifier</a>
+                        </td>}
+                    </tr>
+                    }
+                    @empty {
+                    <h1>Aucun Projet Trouvé</h1>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

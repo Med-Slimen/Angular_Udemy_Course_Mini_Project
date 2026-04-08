@@ -1,0 +1,82 @@
+<div class="container">
+    <div>
+        <h2>Modifier un Projet :</h2>
+    </div>
+    <form [formGroup]="myForm">
+        <div readonly class="col-sm-2 col-md-2 col-lg-2">
+            <label>ID Projet</label>
+            <input readonly  type="text" [(ngModel)]="currentProjet.idProjet" formControlName="idProjet" name="idProjet" class="form-control">
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Nom Projet</label>
+            <input type="text" [(ngModel)]="currentProjet.nomProjet" formControlName="nomProjet" name="nomProjet" class="form-control">
+        </div>
+        @if (myForm.controls['nomProjet'].hasError('required')&& myForm.controls['nomProjet'].touched)
+        {
+            <span class="text-danger">
+            nomProjet est obligatoire
+            </span>
+        }
+        @if (myForm.controls['nomProjet'].hasError('minlength')&& myForm.controls['nomProjet'].touched)
+        {
+            <span class="text-danger">
+            nomProjet min 3 caracteres !
+            </span>
+        }
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>Nom Client</label>
+            <input type="text" [(ngModel)]="currentProjet.nomClient" formControlName="nomClient" name="nomClient" class="form-control">
+        </div>
+         @if (myForm.controls['nomClient'].hasError('required')&& myForm.controls['nomClient'].touched)
+        {
+            <span class="text-danger">
+            nomClient est obligatoire
+            </span>
+        }
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <label>Email du Client</label>
+            <input type="text" [(ngModel)]="currentProjet.emailClient" formControlName="emailClient" name="emailClient" class="form-control">
+        </div>
+        @if (myForm.controls['emailClient'].hasError('required')&& myForm.controls['emailClient'].touched)
+        {
+            <span class="text-danger">
+            email est obligatoire
+            </span>
+        }
+        @if (myForm.controls['emailClient'].hasError('email')&& myForm.controls['emailClient'].touched)
+        {
+            <span class="text-danger">
+            email non valide
+            </span>
+        }
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>Date création</label>
+            <input type="date" [ngModel]="currentProjet.dateDeb| date: 'yyyy-MM-dd'"
+                (ngModelChange)=" currentProjet.dateDeb= $event" formControlName="dateDeb" name="dateDeb" class="form-control">
+        </div>
+        @if (myForm.controls['dateDeb'].hasError('required')&& myForm.controls['dateDeb'].touched)
+        {
+            <span class="text-danger">
+            dateDeb est obligatoire
+            </span>
+        }
+        <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>Departement</label>
+            <select class="form-control form-control-lg" formControlName="idDepart" id="idDepart" name="idDepart"
+            [(ngModel)]="updatedDepartId">
+            @for(dep of depart; track dep.idDepart){
+            <option [value]="dep.idDepart"> {{dep.nomDepart}} </option>
+            }
+            </select>
+        </div>
+        @if (myForm.controls['idDepart'].hasError('required')&& myForm.controls['idDepart'].touched)
+        {
+            <span class="text-danger">
+            Selection du Departement est obligatoire
+            </span>
+        }
+        <div class="mt-2">
+            <button type="submit" (click)="updateProduit()" [disabled]="myForm.invalid" class="btn btn-success">Modifer</button>
+        </div>
+    </form>
+</div>
