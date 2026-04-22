@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../model/User.model';
 import { FormsModule } from '@angular/forms';
 import { Auth } from '../service/auth';
-import { Route, Router } from '@angular/router';
+import { Route, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterLink],
   templateUrl: './login.html',
   styles: ``,
 })
 export class Login implements OnInit {
   user = new User();
   err : number=0;
+  message : string = "login ou mot de passe erronés..";
   constructor(private authService: Auth, private router: Router) {}
   ngOnInit(): void {}
   /*
@@ -31,6 +32,7 @@ export class Login implements OnInit {
     },
     error: (err: any) => {
     this.err = 1;
+    if (err.error.errorCause=='disabled') this.message="Utilisateur désactivé, Veuillez contacter votre Administrateur";
     }
     });
   }
