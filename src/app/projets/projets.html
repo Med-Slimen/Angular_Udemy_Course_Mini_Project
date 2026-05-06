@@ -11,6 +11,7 @@
                         <th>Email du Client</th>
                         <th>Date de debut</th>
                         <th>Departement</th>
+                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,11 @@
                         <td>{{projet.emailClient}}</td>
                         <td>{{projet.dateDeb | date:'dd/MM/yyyy'}}</td>
                         <td>{{projet.departement.nomDepart}}</td>
-                        @if(auth.isAdmin()) {
+                        <td><img class="card-img-top img-responsive"
+src="{{projet.imageStr}}"
+style = "height :50px;width:100px">
+</td>
+                        @if(this.isAdmin) {
                         <td><a class="btn btn-danger" (click)="supprimerProjet(projet)">Supprimer</a></td>
                         <td><a class="btn btn-success" [routerLink]="['/UpdateProjet',projet.idProjet]">Modifier</a></td>}
                     </tr>

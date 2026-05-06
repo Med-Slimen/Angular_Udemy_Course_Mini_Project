@@ -15,18 +15,20 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Projets
                     </a>
+                     
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @if(auth.isAdmin()) {
+                        @if(this.isAdmin) {
                         <li><a class="dropdown-item" routerLink="/AddProjet">Ajouter</a></li>}
                         <li><a class="dropdown-item" href="#">Lister</a></li>
                         <li> <a class="dropdown-item" routerLink="/rechercheParDepartement">Recherche Par
                                 Departement</a></li>
-                        <li><a class="dropdown-item" routerLink="/rechercheParNom" >Recherche Par Nom</a></li>
-                        @if(auth.isAdmin()) {
-                        <li><a class="dropdown-item" routerLink="/listeDepartements" >Gestion des départements</a></li>}
+                        <li><a class="dropdown-item" routerLink="/rechercheParNom">Recherche Par Nom</a></li>
+                        @if(this.isAdmin) {
+                        <li><a class="dropdown-item" routerLink="/listeDepartements">Gestion des départements</a></li>}
                     </ul>
                 </li>
             </ul>
+            <!-- Profile Dropdown 
             <ul class="navbar-nav ms-auto m-2">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -41,6 +43,23 @@
                         <li><a class="dropdown-item" (click)="onLogout()" href="#">Logout</a></li>
                         }
                         <li><a class="dropdown-item" href="#">Profile</a></li>
+                    </ul>
+                </li>
+            </ul>-->
+            <ul class="navbar-nav ms-auto m-2">
+                <li> <a routerLink="/profile" class="nav-link">My
+                Profile</a> </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Connexion
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (!authenticated) {
+                        <button class="action-item" (click)="login()">Login</button>
+                        } @else {
+                        <button class="action-item" (click)="logout()">Logout</button>
+                        }
                     </ul>
                 </li>
             </ul>

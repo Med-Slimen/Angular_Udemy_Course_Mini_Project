@@ -4,7 +4,7 @@ import { Projet } from '../model/project.model';
 import { ProjetService } from '../service/projectService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Departement } from '../model/Departemet.model';
-
+import { Image } from '../model/image.model';
 @Component({
   selector: 'app-add-projet',
   imports: [FormsModule,ReactiveFormsModule],
@@ -16,6 +16,8 @@ export class AddProjet implements OnInit {
   depart?: Departement[];
   idDepart?:number;
   myForm!:FormGroup;
+  uploadedImage!: File;
+  imagePath: any;
   constructor(private ProjetService : ProjetService,private router : Router,private formBuilder : FormBuilder){
   }
   ngOnInit(): void {
@@ -51,6 +53,7 @@ export class AddProjet implements OnInit {
     }
     
   }*/
+ /*
  addProjet(){
   this.newProjet.departement = this.depart?.find(dep => dep.idDepart == this.idDepart)!;
   this.ProjetService.addProjet(this.newProjet)
@@ -58,9 +61,44 @@ export class AddProjet implements OnInit {
   console.log(proj);
   this.router.navigate(['projets']);
   }); 
+}*/
+/*
+addProjet(){
+this.ProjetService
+.uploadImage(this.uploadedImage, this.uploadedImage.name)
+.subscribe((img: Image) => {
+this.newProjet.image=img;
+this.newProjet.departement = this.depart?.find(dep => dep.idDepart == this.idDepart)!;
+this.ProjetService
+.addProjet(this.newProjet)
+.subscribe(() => {
+this.router.navigate(['projets']);
+});
+});
+}*/
+addProjet(){
+this.newProjet.departement = this.depart?.find(dep => dep.idDepart == this.idDepart)!;
+this.ProjetService
+.addProjet(this.newProjet)
+.subscribe((proj) => {
+this.ProjetService
+
+.uploadImageProd(this.uploadedImage,
+this.uploadedImage.name,proj.idProjet!)
+.subscribe((response: any) => {}
+);
+this.router.navigate(['projets']);
+});
 }
 
   idExist(idProjet : number):boolean{
     return this.projets.some(p=>p.idProjet==idProjet);
   }
+  onImageUpload(event: any) {
+this.uploadedImage = event.target.files[0];
+var reader = new FileReader();
+reader.readAsDataURL(this.uploadedImage);
+reader.onload = (_event) => { this.imagePath = reader.result; }
+}
+
 }
